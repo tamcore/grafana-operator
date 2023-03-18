@@ -45,7 +45,7 @@ func (r *IngressReconciler) Reconcile(ctx context.Context, cr *v1beta1.Grafana, 
 }
 
 func (r *IngressReconciler) reconcileIngress(ctx context.Context, cr *v1beta1.Grafana, status *v1beta1.GrafanaStatus, _ *v1beta1.OperatorReconcileVars, scheme *runtime.Scheme) (v1beta1.OperatorStageStatus, error) {
-	if cr.Spec.Ingress == nil || len(cr.Spec.Ingress.Spec.Rules) == 0 {
+	if cr.Spec.Ingress == nil || len(cr.Spec.Ingress.Spec.Rules) == 0 || cr.Spec.Ingress.Spec.Rules[0].Host == "" {
 		return v1beta1.OperatorStageResultSuccess, nil
 	}
 
@@ -202,6 +202,7 @@ func getIngressSpec(cr *v1beta1.Grafana, scheme *runtime.Scheme) v1.IngressSpec 
 	return v1.IngressSpec{
 		Rules: []v1.IngressRule{
 			{
+				Host: cr.Spec.Ingress.Spec.Rules[0].Host,
 				IngressRuleValue: v1.IngressRuleValue{
 					HTTP: &v1.HTTPIngressRuleValue{
 						Paths: []v1.HTTPIngressPath{

@@ -8191,8 +8191,6 @@ spec:
                         type: object
                     type: object
                   spec:
-                    description: IngressSpec describes the Ingress the user wishes
-                      to exist.
                     properties:
                       defaultBackend:
                         description: DefaultBackend is the backend that should handle
